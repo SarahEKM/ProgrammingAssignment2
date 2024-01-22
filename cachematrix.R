@@ -20,19 +20,19 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Uses an argument output of makeCacheMatrix to then check if the inverse has been cached. If it has it will return the value. If it hasn't been, cacheSolve will then calculate it and store it in makeCacheMatrix
+## Uses an argument output of makeCacheMatrix to then check if the inverse has been cached. If it has it will return the value. If it hasn't been, cacheSolve will then calculate it and store it in makeCacheMatrix under the setCacheInv part
 
 cacheSolve <- function(makematrix.object, ...) {# creation of the formal argument makematrix.object
        mm <- makematrix.object$getCacheInv() # saves the pre-exisiting value of getCacheInv to 'mm'. 
                   #If it is the 1st time the function has been run with a particular matrix as x in makeCacheMatrix the value of 'mm' will be NULL. 
                   #If it has been run previously and there is something already cached it will assign the cached value to 'mm'
-       if(!is.null(mm)){ #if the 'if' statement is TRUE (ie. already a non-NULL value in 'mm', the message and the value of 'mm' will be returned. If the 'if' statement is FALSE (ie. mm = NULL) the code continues on below to calculate the inverse
+       if(!is.null(mm)){ #if the 'if' statement is TRUE (ie. a value other than NULL in 'mm', the message and the value of 'mm' will be returned. If the 'if' statement is FALSE (ie. mm = NULL) the code continues on below to calculate the inverse
          message("getting cached data")
        return (mm)
        }
-       data <- makematrix.object$get() #we assign the value of the get element in makeCacheMatrix (which pulls directly from x in the parent environment) to 'data'
+       data <- makematrix.object$get() #assigns the value of the 'get' element in makeCacheMatrix (which pulls directly from x in the parent environment) to 'data'
        mm <- solve(data, ...) #only assigning 'data' to the solve function (ie. not providing a 'b' value in the arguments list) tells the function we want it to calculate the inverse as store it as 'mm'
-       makematrix.object$setCacheInv(mm) #here the function says to rewrite whatever is present in setCacheInv with the matrix value in 'mm'
+       makematrix.object$setCacheInv(mm) #here the function says to rewrite whatever is present in 'setCacheInv' in makeCacheMatrix with the matrix value in 'mm'
        mm #because we want to see the value on the initial solve we ask it to print here too. 
 }
 
